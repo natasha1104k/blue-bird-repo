@@ -1,12 +1,14 @@
 'use client';
 import { useState, useEffect } from "react";
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClient } from "./utils/supabase/clients";
 import { useRouter } from "next/navigation";
 
+
 export default function AuthButton() {
-    const supabase = createClientComponentClient();
+    const supabase = createClient();
     const router = useRouter();
    
+
     const handleSignOut = async () => {
         await supabase.auth.signOut();
         setSession(null);  // Clear session state on sign out
@@ -33,19 +35,6 @@ export default function AuthButton() {
     };
 
     const [session, setSession] = useState(null);
-
-    useEffect(() => {
-        const getSession = async () => {
-            const { data, error } = await supabase.auth.getSession();
-            if (error) {
-                console.error('Error fetching session:', error);
-            } else {
-                console.log('Session data:', data);
-                setSession(data.session);
-            }
-        };
-        getSession();
-    }, [supabase]);
 
     return session ? (
         <button onClick={handleSignOut}>Logout</button>

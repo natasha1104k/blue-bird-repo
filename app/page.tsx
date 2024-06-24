@@ -1,4 +1,4 @@
-import { createClient} from '@/app/utils/supabase/server'
+import { createClient} from './utils/supabase/server'
 import { cookies } from 'next/headers'
 import error from "next/error";
 import AuthButton from './auth-button';
@@ -15,3 +15,4 @@ export default async function Home() {
     </>
   );
 }
+
